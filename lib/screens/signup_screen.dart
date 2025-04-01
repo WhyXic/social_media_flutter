@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:instagram_clone/resources/auth_methods.dart';
+import 'package:instagram_clone/responsive/mobile_screen_layout.dart';
+import 'package:instagram_clone/responsive/responsive_layout_screen.dart';
+import 'package:instagram_clone/responsive/web_screen_layout.dart';
 
 import 'package:instagram_clone/widgets/text_field_input.dart';
 import 'package:instagram_clone/utils/colors.dart';
@@ -23,6 +26,8 @@ class _LoginScreenState extends State<SignupScreen> {
   final TextEditingController _usernameController = TextEditingController();
   Uint8List? _image;
 
+  bool isLoading = false;
+
   @override
   void dispose() {
     _usernameController;
@@ -38,6 +43,36 @@ class _LoginScreenState extends State<SignupScreen> {
     });
   }
 
+  void signUpUser() async {
+    setState(() {
+      isLoading = true;
+    });
+    String res = await AuthMethods().signUpUser(
+      email: _emailController.text,
+      password: _passwordController.text,
+      username: _usernameController.text,
+      bio: _bioController.text,
+      file: _image!,
+    );
+    setState(() {
+      isLoading = false;
+    });
+    if (res == "success") {
+      showSnackBar(res, context);
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+                mobileScreenLayout: MobileScreenLayout(),
+                webScreenLayout: WebScreenLayout(),
+              )));
+    }
+  }
+
+  void goToLogin() {
+    Navigator.of(context).pushNamed('/login');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -47,7 +82,7 @@ class _LoginScreenState extends State<SignupScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Flexible(child: Container(), flex: 1),
+                Flexible(flex: 1, child: Container()),
 
                 // svg image
                 SvgPicture.asset(
@@ -109,17 +144,28 @@ class _LoginScreenState extends State<SignupScreen> {
                 const SizedBox(height: 8),
                 // login button
                 GestureDetector(
-                  onTap: () async {
-                    String res = await AuthMethods().signUpUser(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      username: _usernameController.text,
-                      bio: _bioController.text,
-                      file: _image!,
-                    );
-                    print(res);
-                  },
-                  child: Button(),
+                  onTap: signUpUser,
+                  child: Container(
+                    width: double.infinity,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: blueColor,
+                    ),
+                    child: isLoading == true
+                        ? Center(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 8),
+                              child: CircularProgressIndicator.adaptive(),
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                            child: const Text('Sign Up'),
+                          ),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -129,17 +175,20 @@ class _LoginScreenState extends State<SignupScreen> {
                       'have an account?',
                       style: TextStyle(),
                     )),
-                    Container(
-                        child: Text(
-                      '   sign in',
-                      style: TextStyle(
-                        color: blueColor,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )),
+                    GestureDetector(
+                      onTap: goToLogin,
+                      child: Container(
+                          child: Text(
+                        '   sign in',
+                        style: TextStyle(
+                          color: blueColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )),
+                    ),
                   ],
                 ),
-                Flexible(child: Container(), flex: 1),
+                Flexible(flex: 1, child: Container()),
 
                 // forgot password?
                 //sign up
@@ -157,17 +206,6 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: blueColor,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        child: const Text('Sign Up'),
-      ),
-    );
+    return Container();
   }
 }
