@@ -29,6 +29,10 @@ class _LoginScreenState extends State<SignupScreen> {
   bool isLoading = false;
 
   @override
+/*************  ✨ Codeium Command ⭐  *************/
+  /// Disposes of the controllers used in the signup screen to free up resources.
+
+/******  de8acaf3-7563-4510-898c-d96f0228ccc3  *******/
   void dispose() {
     _usernameController;
     _bioController;
