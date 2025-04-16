@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:instagram_clone/providers/user_provider.dart';
+//import 'package:instagram_clone/providers/user_provider.dart';
 import 'package:instagram_clone/utils/colors.dart';
-import 'package:provider/provider.dart';
-import 'package:instagram_clone/models/user.dart' as model;
+//import 'package:provider/provider.dart';
+//import 'package:instagram_clone/models/user.dart' as model;
 import 'package:instagram_clone/utils/global_variables.dart';
 
 class MobileScreenLayout extends StatefulWidget {

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, avoid_unnecessary_containers
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instagram_clone/responsive/mobile_screen_layout.dart';
@@ -21,6 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false;
   @override
   void dispose() {
+    super.dispose();
     _emailController;
     _passwordController;
   }

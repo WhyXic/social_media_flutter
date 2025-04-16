@@ -32,8 +32,9 @@ class _LoginScreenState extends State<SignupScreen> {
 /*************  ✨ Codeium Command ⭐  *************/
   /// Disposes of the controllers used in the signup screen to free up resources.
 
-/******  de8acaf3-7563-4510-898c-d96f0228ccc3  *******/
+  ///******  de8acaf3-7563-4510-898c-d96f0228ccc3  *******///
   void dispose() {
+    //super.dispose();
     _usernameController;
     _bioController;
     _emailController;
