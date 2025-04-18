@@ -28,7 +28,6 @@ class _SearchScreenState extends State<SearchScreen> {
           controller: textEditingController,
           decoration: const InputDecoration(
               label: Text('Search for user'),
-              border: OutlineInputBorder(),
               fillColor: blueColor,
               iconColor: blueColor,
               hoverColor: blueColor,

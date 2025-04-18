@@ -34,7 +34,7 @@ class _LoginScreenState extends State<SignupScreen> {
 
   ///******  de8acaf3-7563-4510-898c-d96f0228ccc3  *******///
   void dispose() {
-    //super.dispose();
+    super.dispose();
     _usernameController;
     _bioController;
     _emailController;

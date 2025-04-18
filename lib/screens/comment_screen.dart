@@ -18,7 +18,7 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
-  TextEditingController _commentController = new TextEditingController();
+  TextEditingController _commentController = TextEditingController();
   @override
   void dispose() {
     super.dispose();
