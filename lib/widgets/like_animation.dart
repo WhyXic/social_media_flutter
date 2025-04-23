@@ -1,3 +1,5 @@
+// Honestly, no fucking idea how this works, just understood a few lines of code, rest is magic.
+
 import 'package:flutter/material.dart';
 
 class LikeAnimation extends StatefulWidget {
@@ -30,7 +32,7 @@ class _LikeAnimationState extends State<LikeAnimation>
       vsync: this,
       duration: Duration(milliseconds: widget.duration.inMilliseconds ~/ 2),
     );
-    scale = Tween<double>(begin: 1, end: 1.2).animate(controller);
+    scale = Tween<double>(begin: 1, end: 1.2).animate(controller); // changes the side of the heart, from 1 to 1.2, based on the controller, or something like that.
   }
 
   @override
