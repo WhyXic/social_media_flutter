@@ -13,21 +13,26 @@ uploadImageToStorage: Uploads an image to Firebase Storage and returns the downl
 
  */
 class StorageMethods {
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseStorage _storage = FirebaseStorage.instance; // initalize a variable that can look at the firebase storage's instance. 
+  final FirebaseAuth _auth = FirebaseAuth.instance; // initalize a variable that can look at the firebase auth's instance. 
 
-  Future<String> uploadImageToStorage(
-      String childName, Uint8List file, bool isPost) async {
+  Future<String> uploadImageToStorage( // A Future is returned that has a primitve of String inside of it.
+      String childName, Uint8List file, bool isPost) async { // it passes an image (Uint8List, isPost, and its name which is its location.).
     Reference ref =
-        _storage.ref().child(childName).child(_auth.currentUser!.uid);
+        _storage.ref().child(childName).child(_auth.currentUser!.uid); // reference to where the image should be stored which is,  
+    /*
+    Suppose if it is a post, then posts/[userid]/ 
+    otherwise, it will be in 
+    profImg/[userid]/
+    */
     if (isPost) {
-      String id = const Uuid().v1();
+      String id = const Uuid().v1(); // create a random uid for the post and make that the ref.
       ref = ref.child(id);
     }
-    UploadTask uploadTask = ref.putData(file);
+    UploadTask uploadTask = ref.putData(file); // upload the file, 
 
-    TaskSnapshot snap = await uploadTask;
-    String downloadUrl = await snap.ref.getDownloadURL();
+    TaskSnapshot snap = await uploadTask; // snapshot awaits the upload task, once done snap will tell us the metadata of the file.
+    String downloadUrl = await snap.ref.getDownloadURL(); // get the url, of the image, which will let us use NetworkImage(), widget to display it in the ui.
 
     return downloadUrl;
   }
