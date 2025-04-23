@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+// just a basic follow button that accepts a callback function that changes the data in firebase.
 class FollowButton extends StatelessWidget {
   final Function()? function;
   final Color backgroundColor;
