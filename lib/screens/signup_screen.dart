@@ -29,10 +29,8 @@ class _LoginScreenState extends State<SignupScreen> {
   bool isLoading = false;
 
   @override
-/*************  ✨ Codeium Command ⭐  *************/
-  /// Disposes of the controllers used in the signup screen to free up resources.
 
-  ///******  de8acaf3-7563-4510-898c-d96f0228ccc3  *******///
+  /// Disposes of the controllers used in the signup screen to free up resources
   void dispose() {
     super.dispose();
     _usernameController;
@@ -42,7 +40,7 @@ class _LoginScreenState extends State<SignupScreen> {
   }
 
   void selectImage() async {
-    Uint8List image = await pickImage(ImageSource.gallery);
+    Uint8List image = await pickImage(ImageSource.gallery); // pick image using the pick image package, which simplifies the process for us.
     setState(() {
       _image = image;
     });
