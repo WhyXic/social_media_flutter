@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
-import 'package:instagram_clone/models/post.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:instagram_clone/models/post.dart'; // imports posts model (contains class post) which allows us to add it to db.
+import 'package:cloud_firestore/cloud_firestore.dart'; // imports cloud firestore.
 import 'package:instagram_clone/resources/storage_methods.dart';
-import 'package:uuid/uuid.dart';
+import 'package:uuid/uuid.dart'; // for generating uuids for new posts.
 
 class FirestoreMethods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -16,9 +16,9 @@ class FirestoreMethods {
   ) async {
     String res = 'Some error occoured';
     try {
-      String postId = const Uuid().v1();
+      String postId = const Uuid().v1(); // makes post id.
       String photoUrl =
-          await StorageMethods().uploadImageToStorage('postImage', file, true);
+          await StorageMethods().uploadImageToStorage('postImage', file, true); // uploads to firebase storage and returns its link.
       Post post = Post(
         description: description,
         uid: uid,
@@ -28,7 +28,7 @@ class FirestoreMethods {
         postUrl: photoUrl,
         profImage: profImage,
         likes: [],
-      );
+      ); // makes a post instance with variables from where the function is called.
       _firestore.collection('posts').doc(postId).set(post.toJson());
       res = 'Success';
       return res;
@@ -37,7 +37,7 @@ class FirestoreMethods {
     }
   }
 
-  Future<void> likePost(String postId, String uid, List likes) async {
+  Future<void> likePost(String postId, String uid, List likes) async { // adds/removes uid of current user to likes array in db.
     try {
       if (likes.contains(uid)) {
         await _firestore.collection('posts').doc(postId).update({
@@ -52,8 +52,9 @@ class FirestoreMethods {
       print(e.toString());
     }
   }
-
-  Future<void> postComment(String postId, String text, String uid, String name,
+// posts a comment, with random uid, on a post matching the same uid we pass as a parameter. 
+  // posts/[postId]/comments/[commentId]; 
+  Future<void> postComment(String postId, String text, String uid, String name, 
       String profilePic) async {
     try {
       if (text.isNotEmpty) {
@@ -80,7 +81,7 @@ class FirestoreMethods {
     }
   }
 
-  Future<void> deletePost(String postId) async {
+  Future<void> deletePost(String postId) async { // detes post by grabbing the post via post id.
     try {
       await _firestore.collection('posts').doc(postId).delete();
     } catch (e) {
@@ -88,8 +89,8 @@ class FirestoreMethods {
     }
   }
 
-  Future<void> followUser(String uid, String followId) async {
-    try {
+  Future<void> followUser(String uid, String followId) async { // adds user to follow list / removes the user from follow list.
+    try { 
       DocumentSnapshot snap =
           await _firestore.collection('users').doc(uid).get();
       List following = (snap.data()! as dynamic)['following'];
